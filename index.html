@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday PPP! 🎀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --pink-deep:#c71585; --pink-hot:#ff1493; --pink-mid:#ff69b4;
+      --pink-light:#ffb6c1; --gold:#ffd700; --gold-dark:#b8860b;
+    }
+    html,body { width:100%;height:100%;overflow:hidden;background:#0d0608;
+      font-family:'Playfair Display',Georgia,serif; }
+    .page { position:fixed;inset:0;transition:opacity .8s ease; }
+
+    /* ===================== PAGE 1 — DOOR ===================== */
+    #page1 {
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      background:radial-gradient(ellipse 80% 60% at 50% 40%,#3d0d22 0%,#1a0610 50%,#0d0608 100%);
+      z-index:100;
+      padding:clamp(8px,3vh,30px) clamp(8px,3vw,30px);
+    }
+    .p1-particle{position:absolute;pointer-events:none;animation:p1-float linear infinite;opacity:0;}
+    @keyframes p1-float{0%{transform:translateY(105vh) rotate(0);opacity:0}5%{opacity:.9}90%{opacity:.6}100%{transform:translateY(-10vh) rotate(540deg);opacity:0}}
+    .p1-title{font-family:'Dancing Script',cursive;font-size:clamp(1.4rem,min(4.5vw,5vh),3.6rem);color:#ffc0cb;
+      text-shadow:0 0 15px #ff1493,0 0 35px #ff69b4,0 0 70px rgba(255,20,147,.4);
+      letter-spacing:4px;margin-bottom:clamp(6px,2.5vh,2rem);animation:title-glow 2.4s ease-in-out infinite;
+      text-align:center;padding:0 1rem;}
+    @keyframes title-glow{0%,100%{text-shadow:0 0 15px #ff1493,0 0 35px #ff69b4}50%{text-shadow:0 0 25px #ff1493,0 0 55px #ff69b4,0 0 90px #ffb6c1}}
+    .door-perspective{perspective:1400px;perspective-origin:50% 50%;}
+    .door-frame{width:clamp(170px,min(26vw,34vh),310px);height:clamp(270px,min(48vw,55vh),500px);position:relative;
+      border:14px solid #5a2008;border-radius:8px 8px 0 0;cursor:pointer;user-select:none;
+      box-shadow:0 0 60px rgba(255,105,180,.25),0 0 120px rgba(255,20,147,.1),inset 0 0 0 3px rgba(255,182,193,.2);}
+    .door-frame::before{content:'';position:absolute;inset:-30px;
+      background:radial-gradient(ellipse,rgba(255,105,180,.12) 0%,transparent 70%);
+      pointer-events:none;border-radius:50%;}
+    .door-bow{position:absolute;top:-34px;left:50%;transform:translateX(-50%);z-index:5;width:54px;height:30px;pointer-events:none;}
+    @media(max-height:520px){.door-bow{top:-26px;width:42px;height:22px;}}
+    @media(max-height:520px){.door-bow::before,.door-bow::after{width:20px;height:15px;}}
+    .door-bow::before,.door-bow::after{content:'';position:absolute;top:4px;width:26px;height:20px;
+      background:linear-gradient(135deg,#ff85b3,#ff1493);border-radius:50% 50% 40% 40%;}
+    .door-bow::before{left:2px;transform:rotate(-30deg);transform-origin:right center;}
+    .door-bow::after{right:2px;transform:rotate(30deg);transform-origin:left center;}
+    .door-bow-knot{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:10px;height:10px;background:#c71585;border-radius:50%;z-index:1;}
+    .door-leaf{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;
+      transition:transform 1.6s cubic-bezier(.4,0,.2,1);border-radius:5px 5px 0 0;overflow:hidden;}
+    .door-leaf.open{transform:rotateY(-115deg);}
+    .door-front{position:absolute;inset:0;border-radius:5px 5px 0 0;
+      background:repeating-linear-gradient(180deg,transparent 0,transparent 9px,rgba(0,0,0,.04) 9px,rgba(0,0,0,.04) 10px),
+        linear-gradient(160deg,#a0522d 0%,#d2691e 25%,#8b4513 55%,#c07040 80%,#8b4513 100%);}
+    .door-panel{position:absolute;border-radius:3px;
+      box-shadow:inset 3px 3px 8px rgba(0,0,0,.4),inset -2px -2px 6px rgba(255,200,150,.2),0 0 0 2px rgba(255,182,193,.25);
+      background:linear-gradient(145deg,rgba(255,255,255,.08) 0%,rgba(0,0,0,.1) 100%);}
+    .dp-tl{top:12px;left:12px;right:50%;bottom:52%}.dp-tr{top:12px;left:52%;right:12px;bottom:52%}
+    .dp-bl{top:51%;left:12px;right:50%;bottom:12px}.dp-br{top:51%;left:52%;right:12px;bottom:12px}
+    .door-div-h{position:absolute;top:calc(50% - 3px);left:8px;right:8px;height:6px;
+      background:linear-gradient(90deg,transparent,rgba(255,182,193,.3),rgba(255,215,0,.4),rgba(255,182,193,.3),transparent);border-radius:3px;}
+    .door-div-v{position:absolute;left:calc(50% - 3px);top:8px;bottom:8px;width:6px;
+      background:linear-gradient(180deg,transparent,rgba(255,182,193,.3),rgba(255,215,0,.4),rgba(255,182,193,.3),transparent);border-radius:3px;}
+    .door-photo-frame{position:absolute;top:10%;left:50%;transform:translateX(-50%);width:55%;height:38%;
+      border:5px solid var(--gold);border-radius:8px;background:#1a0610;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 16px rgba(0,0,0,.6),0 0 12px rgba(255,215,0,.3),inset 0 0 20px rgba(0,0,0,.5);
+      overflow:hidden;z-index:2;}
+    .door-photo-emoji{font-size:clamp(2.5rem,6vw,4rem);animation:photo-bob 2s ease-in-out infinite;display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+    .door-photo-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;display:none;}
+    @keyframes photo-bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+    .door-monogram{position:absolute;bottom:18%;left:50%;transform:translateX(-50%);
+      font-family:'Dancing Script',cursive;font-size:clamp(1.2rem,3vw,2rem);color:var(--gold);
+      text-shadow:0 0 10px rgba(255,215,0,.5);letter-spacing:5px;z-index:2;}
+    .door-knob{position:absolute;right:10%;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;
+      background:radial-gradient(circle at 35% 30%,#ffe566,var(--gold-dark) 70%,#6b4800);
+      box-shadow:0 2px 10px rgba(0,0,0,.6),0 0 12px rgba(255,215,0,.4);z-index:3;}
+    .door-behind{position:absolute;inset:0;
+      background:radial-gradient(ellipse at center,#ff69b4 0%,#c71585 50%,#7b003e 100%);
+      display:flex;align-items:center;justify-content:center;font-size:3rem;}
+    .p1-hint{margin-top:clamp(6px,2vh,1.6rem);color:rgba(255,182,193,.65);font-size:.85rem;letter-spacing:3px;
+      text-transform:uppercase;animation:hint-bounce 1.8s ease-in-out infinite;}
+    @media(max-height:520px){.p1-hint{display:none;}}
+    @media(max-height:480px){.p1-title{font-size:1.2rem;}}
+    @keyframes hint-bounce{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(-6px);opacity:1}}
+
+    /* ===================== TRANSITION ===================== */
+    #overlay{position:fixed;inset:0;z-index:500;background:var(--pink-mid);display:none;
+      align-items:center;justify-content:center;font-size:4rem;opacity:0;transition:opacity .4s;}
+
+    /* ===================== PAGE 2 — ROOM ===================== */
+    #page2{display:none;opacity:0;transition:opacity .8s;}
+
+    .room{position:relative;width:100%;height:100%;overflow:hidden;background:#1a0610;}
+
+    /* ── SLIDESHOW LAYERS ── */
+    .slide{
+      position:absolute;inset:0;
+      overflow:hidden;
+      opacity:0;
+      transition:opacity 1.8s ease-in-out;
+      z-index:1;
+    }
+    .slide.active{ opacity:1; }
+    /* Blurred backdrop fills letterbox areas */
+    .slide-blur{
+      position:absolute;inset:-8%;
+      width:116%;height:116%;
+      object-fit:cover;
+      filter:blur(22px) brightness(.6) saturate(1.3);
+    }
+    /* Full photo — never cropped */
+    .slide-img{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:contain;
+    }
+
+    /* Subtle vignette on top of slides */
+    .room-vignette{
+      position:absolute;inset:0;z-index:4;pointer-events:none;
+      background:radial-gradient(ellipse 92% 92% at 50% 50%,transparent 40%,rgba(60,5,25,.28) 100%);
+    }
+
+    /* ── BALLOONS ── */
+    .balloon-layer{position:absolute;inset:0;z-index:60;pointer-events:none;}
+    .balloon{
+      position:absolute;cursor:pointer;pointer-events:all;
+      display:flex;flex-direction:column;align-items:center;
+      animation:balloon-float var(--bf,3s) ease-in-out infinite;
+      animation-delay:var(--bfd,0s);
+      filter:drop-shadow(0 8px 22px rgba(0,0,0,.22));
+      transition:filter .2s,transform .2s;
+      user-select:none;
+    }
+    .balloon:hover{
+      filter:drop-shadow(0 10px 28px rgba(255,105,180,.55)) brightness(1.1);
+      transform:scale(1.08);
+      animation-play-state:paused;
+    }
+    .balloon-body{
+      width:clamp(40px,min(7.5vw,10vh),86px);
+      height:clamp(52px,min(9.5vw,13vh),106px);
+      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      position:relative;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:inset -8px -8px 18px rgba(0,0,0,.12),inset 6px 6px 14px rgba(255,255,255,.28);
+    }
+    /* Knot triangle at bottom */
+    .balloon-body::after{
+      content:'';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);
+      width:14px;height:11px;
+      clip-path:polygon(50% 100%,0 0,100% 0);
+      background:inherit;
+    }
+    /* Highlight shine */
+    .balloon-shine{
+      position:absolute;top:13%;left:17%;width:33%;height:24%;
+      background:rgba(255,255,255,.38);border-radius:50%;
+      transform:rotate(-30deg);pointer-events:none;
+    }
+    /* Label */
+    .balloon-label{
+      position:relative;z-index:1;
+      font-family:'Dancing Script',cursive;font-size:clamp(.45rem,min(.95vw,1.3vh),.8rem);
+      color:rgba(255,255,255,.96);text-align:center;
+      text-shadow:0 1px 4px rgba(0,0,0,.45);line-height:1.3;font-weight:700;
+    }
+    /* String */
+    .balloon-string{
+      width:1.5px;height:clamp(32px,5vh,58px);
+      background:linear-gradient(180deg,rgba(200,160,100,.65),rgba(200,160,100,.15));
+    }
+    /* Gold locked balloon extra glow */
+    .balloon-locked .balloon-body{
+      box-shadow:0 0 22px rgba(255,215,0,.55),inset -8px -8px 18px rgba(0,0,0,.14),inset 6px 6px 14px rgba(255,255,255,.3);
+    }
+    @keyframes balloon-float{
+      0%,100%{transform:translateY(0) rotate(-2deg)}
+      28%    {transform:translateY(-17px) rotate(1.5deg)}
+      58%    {transform:translateY(-9px) rotate(2.5deg)}
+      82%    {transform:translateY(-21px) rotate(-1deg)}
+    }
+
+    /* ===================== MESSAGE MODAL ===================== */
+    .msg-overlay{display:none;position:fixed;inset:0;z-index:900;align-items:center;justify-content:center;}
+    .msg-overlay.show{display:flex;}
+    .msg-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.58);backdrop-filter:blur(7px);}
+    .msg-card{
+      position:relative;background:linear-gradient(145deg,#fff8fb,#ffe4f2);
+      border:3px solid var(--pink-mid);border-radius:22px;padding:2.5rem 2.5rem 2rem;
+      max-width:520px;width:92%;
+      box-shadow:0 25px 70px rgba(255,105,180,.35),0 0 0 1px rgba(255,182,193,.4);
+      animation:card-pop .4s cubic-bezier(.34,1.56,.64,1);}
+    @keyframes card-pop{from{transform:scale(.4) rotate(-8deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+    .msg-close{position:absolute;top:1rem;right:1rem;background:var(--pink-mid);border:none;color:#fff;
+      width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;font-weight:700;
+      display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2);
+      transition:background .2s,transform .2s;}
+    .msg-close:hover{background:var(--pink-hot);transform:scale(1.1);}
+    .msg-big-emoji{font-size:3.5rem;text-align:center;margin-bottom:.8rem;}
+    .msg-from{font-family:'Dancing Script',cursive;font-size:1.4rem;color:var(--pink-deep);margin-bottom:.8rem;}
+    .msg-divider{height:2px;background:linear-gradient(90deg,transparent,var(--pink-light),transparent);margin-bottom:1rem;}
+    .msg-text{font-size:1rem;color:#555;line-height:1.75;white-space:pre-wrap;max-height:50vh;overflow-y:auto;}
+    .msg-text::-webkit-scrollbar{width:4px;}
+    .msg-text::-webkit-scrollbar-thumb{background:var(--pink-light);border-radius:2px;}
+
+    /* ===================== PASSWORD MODAL ===================== */
+    .pw-overlay{display:none;position:fixed;inset:0;z-index:900;align-items:center;justify-content:center;}
+    .pw-overlay.show{display:flex;}
+    .pw-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);}
+    .pw-card{
+      position:relative;background:linear-gradient(160deg,#1a0520,#2d0a3a);
+      border:2px solid var(--pink-hot);border-radius:18px;padding:2.5rem 2rem 2rem;
+      max-width:380px;width:90%;text-align:center;
+      box-shadow:0 0 60px rgba(255,20,147,.25),0 25px 60px rgba(0,0,0,.5);
+      animation:card-pop .35s cubic-bezier(.34,1.56,.64,1);}
+    .pw-lock{font-size:3rem;margin-bottom:.5rem;}
+    .pw-title{font-family:'Dancing Script',cursive;font-size:1.6rem;color:var(--pink-mid);margin-bottom:.3rem;}
+    .pw-sub{color:rgba(255,182,193,.65);font-size:.82rem;margin-bottom:1.5rem;}
+    .pw-input{width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.08);border:2px solid var(--pink-hot);
+      border-radius:12px;color:#fff;font-size:1.1rem;text-align:center;letter-spacing:4px;outline:none;
+      transition:border-color .2s,box-shadow .2s;}
+    .pw-input:focus{border-color:#ff85c8;box-shadow:0 0 20px rgba(255,20,147,.3);}
+    .pw-btn{margin-top:1rem;padding:.75rem 2.5rem;background:linear-gradient(135deg,var(--pink-hot),var(--pink-deep));
+      border:none;border-radius:12px;color:#fff;cursor:pointer;font-family:'Dancing Script',cursive;font-size:1.1rem;
+      transition:transform .2s,box-shadow .2s;}
+    .pw-btn:hover{transform:scale(1.06);box-shadow:0 6px 20px rgba(255,20,147,.4);}
+    .pw-error{color:#ff6b6b;font-size:.82rem;margin-top:.6rem;opacity:0;transition:opacity .3s;min-height:1.2em;}
+    .pw-error.show{opacity:1;}
+    .pw-close{position:absolute;top:.8rem;right:.9rem;background:none;border:none;color:var(--pink-mid);font-size:1.4rem;cursor:pointer;}
+  </style>
+</head>
+<body>
+
+<div id="overlay">✨</div>
+
+<!-- ============================================================
+     PAGE 1 — THE DOOR
+============================================================ -->
+<div id="page1" class="page">
+  <div class="p1-title">✨ Happy Birthday PPP ✨</div>
+  <div class="door-perspective">
+    <div class="door-frame" id="doorFrame" onclick="handleDoorClick()">
+      <div class="door-bow"><div class="door-bow-knot"></div></div>
+      <div class="door-behind">💕</div>
+      <div class="door-leaf" id="doorLeaf">
+        <div class="door-front">
+          <div class="door-panel dp-tl"></div>
+          <div class="door-panel dp-tr"></div>
+          <div class="door-panel dp-bl"></div>
+          <div class="door-panel dp-br"></div>
+          <div class="door-div-h"></div>
+          <div class="door-div-v"></div>
+          <div class="door-photo-frame" id="doorPhotoFrame">
+            <div class="door-photo-emoji" id="doorPhotoFallback">🤣🎂</div>
+            <img id="doorPhotoImg" class="door-photo-img" src="selfie.png" alt="PPP"
+              onload="this.style.display='block';document.getElementById('doorPhotoFallback').style.display='none';"
+              onerror="this.style.display='none';">
+          </div>
+          <div class="door-monogram">P P P</div>
+          <div class="door-knob"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p1-hint">🚪 click the door to enter 🚪</div>
+</div>
+
+<!-- ============================================================
+     PAGE 2 — PINK PARADISE  (crossfading slideshow)
+     Save images as: room1.jpg  room2.jpg  room3.jpg  room4.jpg
+============================================================ -->
+<div id="page2" class="page">
+  <div class="room">
+    <!-- Slideshow background layers -->
+    <div class="slide" id="slide0"></div>
+    <div class="slide" id="slide1"></div>
+    <div class="slide" id="slide2"></div>
+    <div class="slide" id="slide3"></div>
+
+    <!-- Subtle edge vignette -->
+    <div class="room-vignette"></div>
+
+    <!-- Floating balloons (greeting messages + locked) -->
+    <div class="balloon-layer" id="balloonLayer"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MESSAGE MODAL
+============================================================ -->
+<div class="msg-overlay" id="msgModal">
+  <div class="msg-backdrop" onclick="closeMsgModal()"></div>
+  <div class="msg-card">
+    <button class="msg-close" onclick="closeMsgModal()">✕</button>
+    <div class="msg-big-emoji" id="msgEmoji"></div>
+    <div class="msg-from"     id="msgFrom"></div>
+    <div class="msg-divider"></div>
+    <div class="msg-text"     id="msgText"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PASSWORD MODAL
+============================================================ -->
+<div class="pw-overlay" id="pwModal">
+  <div class="pw-backdrop" onclick="closePwModal()"></div>
+  <div class="pw-card">
+    <button class="pw-close" onclick="closePwModal()">✕</button>
+    <div class="pw-lock">🔐</div>
+    <div class="pw-title">Secret Room</div>
+    <div class="pw-sub">Enter the password to unlock a secret surprise…</div>
+    <input class="pw-input" id="pwInput" type="password" placeholder="••••••" autocomplete="off"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <div><button class="pw-btn" onclick="checkPw()">Enter ✨</button></div>
+    <div class="pw-error" id="pwError">Hmm… wrong password! Try again 💔</div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   GREETING MESSAGES  ← replace with real messages!
+   Add/remove objects to add/remove balloons.
+═══════════════════════════════════════════════════════════════ */
+const GREETINGS = [
+  { from:"Friend 1 🌸", emoji:"🎉", color:["#ff85b3","#e8005a"],
+    message:"Happy Birthday PPP! 🎀\n\n✏️ Replace with your real message!\n\nWishing you all the love! 💕" },
+  { from:"Friend 2 💖", emoji:"🎂", color:["#ffb6c1","#d04070"],
+    message:"Hey PPP! Happy Birthday! 🌸\n\n✏️ Replace with your real message!\n\nYou are amazing! ✨" },
+  { from:"Friend 3 🌷", emoji:"🥳", color:["#ff69b4","#a00058"],
+    message:"PPP!! Happy Birthday! 🎊\n\n✏️ Replace with your real message!\n\nAnother year of being fabulous! 👑" },
+  { from:"Friend 4 💝", emoji:"🦋", color:["#ffc8d8","#c05080"],
+    message:"Wishing my bestie the best birthday! 💕\n\n✏️ Replace with your real message!\n\nYou deserve everything! 🌷" },
+  { from:"Friend 5 🎀", emoji:"🌹", color:["#ff1493","#700035"],
+    message:"Happy Birthday PPP! 💖\n\n✏️ Replace with your real message!\n\nHere's to another year! 🥂" },
+  { from:"Friend 6 ✨", emoji:"👑", color:["#d4a0ff","#7000cc"],
+    message:"Queen PPP! Happy Birthday! 👸\n\n✏️ Replace with your real message!\n\nMay your day be as beautiful as you are! 🌷" },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   SECRET PASSWORD
+═══════════════════════════════════════════════════════════════ */
+const SECRET_PASSWORD = "pumpumpum";
+
+/* ═══════════════════════════════════════════════
+   BALLOON POSITIONS (% of viewport — open air areas)
+   Adjust if they overlap anything in your photos
+═══════════════════════════════════════════════ */
+const BALLOON_POS = [
+  [5,  12],  // top-left
+  [22, 7],   // upper-left-centre
+  [46, 5],   // top-centre
+  [68, 9],   // upper-right
+  [11, 40],  // mid-left
+  [78, 28],  // mid-right  (was 85, pulled in so it doesn't clip)
+];
+// Gold locked balloon position (was 91, pulled in for mobile)
+const LOCKED_POS = [84, 12];
+
+/* ═══════════════════════════════════════════════
+   PAGE 1 — particles
+═══════════════════════════════════════════════ */
+(function(){
+  const p=document.getElementById('page1');
+  const chars=['💗','💕','✨','🌸','💖','🎀','🌷','⭐','🎊','🩷','💫','🎈'];
+  for(let i=0;i<30;i++){
+    const el=document.createElement('div'); el.className='p1-particle';
+    el.textContent=chars[i%chars.length];
+    el.style.left=Math.random()*100+'vw';
+    el.style.fontSize=(.7+Math.random()*1.4)+'rem';
+    el.style.animationDuration=(4+Math.random()*6)+'s';
+    el.style.animationDelay=(Math.random()*8)+'s';
+    p.appendChild(el);
+  }
+})();
+
+/* ═══════════════════════════════════════════════
+   DOOR TRANSITION
+═══════════════════════════════════════════════ */
+let doorOpened=false;
+function handleDoorClick(){
+  if(doorOpened)return; doorOpened=true;
+  document.getElementById('doorLeaf').classList.add('open');
+  setTimeout(goToRoom,1400);
+}
+function goToRoom(){
+  const ov=document.getElementById('overlay');
+  ov.style.display='flex'; ov.style.opacity='0';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ ov.style.opacity='1'; }));
+  setTimeout(()=>{
+    document.getElementById('page1').style.opacity='0';
+    setTimeout(()=>{
+      document.getElementById('page1').style.display='none';
+      const p2=document.getElementById('page2'); p2.style.display='block';
+      startSlideshow();
+      buildBalloons();
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        p2.style.opacity='1'; ov.style.opacity='0';
+        setTimeout(()=>{ ov.style.display='none'; },500);
+      }));
+    },500);
+  },350);
+}
+
+/* ═══════════════════════════════════════════════
+   SLIDESHOW — crossfade between 4 images
+   Save as: room1.jpg  room2.jpg  room3.jpg  room4.jpg
+═══════════════════════════════════════════════ */
+function startSlideshow(){
+  const urls=['room1.jpg','room2.jpg','room3.jpg','room4.jpg'];
+  const slides=document.querySelectorAll('.slide');
+
+  // Each slide: blurred backdrop (fills letterbox) + crisp full image (never cropped)
+  slides.forEach((s,i)=>{
+    s.innerHTML=`<img class="slide-blur" src="${urls[i]}" alt="">
+                 <img class="slide-img"  src="${urls[i]}" alt="">`;
+  });
+
+  let current=0;
+  slides[0].classList.add('active');
+
+  setInterval(()=>{
+    slides[current].classList.remove('active');
+    current=(current+1)%slides.length;
+    slides[current].classList.add('active');
+  }, 6000); // each image shows for 6 seconds
+}
+
+/* ═══════════════════════════════════════════════
+   CONFETTI BURST  — spawns at click position
+═══════════════════════════════════════════════ */
+function spawnConfetti(x, y){
+  const colors=['#ff69b4','#ff1493','#ffd700','#ff85b3','#c71585','#ffffff','#ffb6c1','#b040ff','#ff0066','#ffe566'];
+  for(let i=0;i<60;i++){
+    const el=document.createElement('div');
+    const size=4+Math.random()*7;
+    const isCircle=Math.random()>.5;
+    const isStrip=!isCircle&&Math.random()>.5;
+    el.style.cssText=`
+      position:fixed;left:${x}px;top:${y}px;
+      width:${size}px;height:${isStrip?size*.35:size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${isCircle?'50%':'2px'};
+      pointer-events:none;z-index:9999;`;
+    document.body.appendChild(el);
+
+    const angle=Math.random()*Math.PI*2;
+    const speed=100+Math.random()*200;
+    const vx=Math.cos(angle)*speed;
+    const vy=Math.sin(angle)*speed-90;
+    const rot=(Math.random()-.5)*720;
+
+    el.animate([
+      {transform:`translate(-50%,-50%) rotate(0deg)`,opacity:1},
+      {transform:`translate(calc(-50% + ${vx}px),calc(-50% + ${vy+180}px)) rotate(${rot}deg)`,opacity:0}
+    ],{
+      duration:700+Math.random()*500,
+      easing:'cubic-bezier(.25,.46,.45,.94)',
+      fill:'forwards'
+    }).finished.then(()=>el.remove());
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   BUILD BALLOONS
+═══════════════════════════════════════════════ */
+function buildBalloons(){
+  const layer=document.getElementById('balloonLayer');
+
+  // Regular greeting balloons
+  GREETINGS.forEach((g,i)=>{
+    const pos=BALLOON_POS[i%BALLOON_POS.length];
+    const balloon=makeBalloon(
+      g.color[0], g.color[1],
+      g.from.split(' ')[0], g.emoji,
+      pos[0]+(Math.random()-.5)*2,
+      pos[1]+(Math.random()-.5)*2,
+      false
+    );
+    balloon.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      spawnConfetti(e.clientX, e.clientY);
+      setTimeout(()=>openMsg(i), 380);
+    });
+    layer.appendChild(balloon);
+  });
+
+  // Gold locked balloon
+  const locked=makeBalloon(
+    '#ffe566','#c09010',
+    'Secret','🔐',
+    LOCKED_POS[0], LOCKED_POS[1],
+    true
+  );
+  locked.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    spawnConfetti(e.clientX, e.clientY);
+    setTimeout(()=>showPwModal(), 380);
+  });
+  layer.appendChild(locked);
+}
+
+function makeBalloon(c1, c2, label, emoji, leftPct, topPct, isLocked){
+  const div=document.createElement('div');
+  div.className='balloon'+(isLocked?' balloon-locked':'');
+  const bf=2.5+Math.random()*2.2;
+  const bfd=Math.random()*3;
+  div.style.cssText=`left:${leftPct}%;top:${topPct}%;--bf:${bf}s;--bfd:${bfd}s;`;
+  div.innerHTML=`
+    <div class="balloon-body" style="background:radial-gradient(circle at 35% 30%,${c1},${c2})">
+      <div class="balloon-shine"></div>
+      <div class="balloon-label">${label}<br>${emoji}</div>
+    </div>
+    <div class="balloon-string"></div>`;
+  return div;
+}
+
+/* ═══════════════════════════════════════════════
+   MESSAGE MODAL
+═══════════════════════════════════════════════ */
+function openMsg(i){
+  const g=GREETINGS[i];
+  document.getElementById('msgEmoji').textContent=g.emoji;
+  document.getElementById('msgFrom').textContent=`From: ${g.from}`;
+  document.getElementById('msgText').textContent=g.message;
+  document.getElementById('msgModal').classList.add('show');
+}
+function closeMsgModal(){ document.getElementById('msgModal').classList.remove('show'); }
+
+/* ═══════════════════════════════════════════════
+   PASSWORD MODAL
+═══════════════════════════════════════════════ */
+function showPwModal(){
+  document.getElementById('pwModal').classList.add('show');
+  document.getElementById('pwInput').value='';
+  document.getElementById('pwError').classList.remove('show');
+  setTimeout(()=>document.getElementById('pwInput').focus(),120);
+}
+function closePwModal(){ document.getElementById('pwModal').classList.remove('show'); }
+function checkPw(){
+  const v=document.getElementById('pwInput').value;
+  if(v===SECRET_PASSWORD){
+    closePwModal();
+    alert('🎊 Correct! The secret room is coming soon… 🎊');
+  } else {
+    const e=document.getElementById('pwError');
+    e.classList.add('show');
+    document.getElementById('pwInput').value='';
+    document.getElementById('pwInput').focus();
+    setTimeout(()=>e.classList.remove('show'),3000);
+  }
+}
+</script>
+</body>
+</html>
