@@ -150,6 +150,34 @@
       color:rgba(255,182,193,.2);
     }
 
+    /* ── DARK ROOM FLOATING HEARTS ── */
+    .dark-heart-layer{position:absolute;inset:0;pointer-events:none;}
+    .dark-heart{
+      position:absolute;
+      display:flex;flex-direction:column;align-items:center;
+      pointer-events:none;
+      animation:balloon-float var(--bf,3s) ease-in-out infinite,
+                dark-heart-shimmer var(--bf,3s) ease-in-out infinite;
+      animation-delay:var(--bfd,0s);
+    }
+    .dark-heart-body{
+      width:60px;height:56px;
+      clip-path:path('M 30 52 C 3 38 0 22 0 14 C 0 6 7 2 15 2 C 22 2 27 6 30 10 C 33 6 38 2 45 2 C 53 2 60 6 60 14 C 60 22 57 38 30 52 Z');
+      background:rgba(255,160,195,.1);
+    }
+    @media(max-width:480px){
+      .dark-heart-body{width:46px;height:43px;
+        clip-path:path('M 23 40 C 2 29 0 17 0 11 C 0 5 5 2 11 2 C 17 2 21 5 23 8 C 25 5 29 2 35 2 C 41 2 46 5 46 11 C 46 17 44 29 23 40 Z');}
+    }
+    @keyframes dark-heart-shimmer{
+      0%,100%{ filter:drop-shadow(0 0 9px rgba(255,182,193,.75))
+                       drop-shadow(0 0 24px rgba(255,105,180,.52))
+                       drop-shadow(0 0 52px rgba(255,50,110,.22)); }
+      50%    { filter:drop-shadow(0 0 17px rgba(255,225,238,1))
+                       drop-shadow(0 0 42px rgba(255,105,180,.85))
+                       drop-shadow(0 0 88px rgba(255,50,110,.48)); }
+    }
+
     /* ===================== FLASH OVERLAY ===================== */
     #flash {
       position:fixed;inset:0;z-index:850;pointer-events:none;
@@ -266,6 +294,32 @@
       28%    {transform:translateY(-15px) rotate(1.5deg)}
       58%    {transform:translateY(-8px) rotate(2.5deg)}
       82%    {transform:translateY(-19px) rotate(-1deg)}
+    }
+
+    /* ── ROOM BANNER ── */
+    .room-banner{
+      position:absolute;top:clamp(10px,2vh,20px);left:50%;transform:translateX(-50%);
+      z-index:70;text-align:center;pointer-events:none;white-space:nowrap;
+      background:linear-gradient(135deg,rgba(255,105,180,.18),rgba(199,21,133,.12));
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      border:1px solid rgba(255,182,193,.3);
+      border-radius:50px;
+      padding:clamp(5px,1vh,10px) clamp(14px,3.5vw,28px);
+      box-shadow:0 4px 20px rgba(255,105,180,.15),inset 0 1px 0 rgba(255,255,255,.15);
+    }
+    .room-banner-title{
+      display:block;
+      font-family:'Dancing Script',cursive;
+      font-size:clamp(1rem,min(3vw,3.5vh),1.9rem);
+      color:#ffc8d8;
+      text-shadow:0 0 12px rgba(255,105,180,.65),0 0 28px rgba(255,20,147,.3);
+      letter-spacing:2px;line-height:1.3;
+    }
+    .room-banner-hint{
+      display:block;
+      font-size:clamp(.55rem,min(1.4vw,1.8vh),.8rem);
+      color:rgba(255,182,193,.72);
+      letter-spacing:2.5px;text-transform:uppercase;margin-top:1px;
     }
 
     /* ── LOCK BUTTON (top-right, reveals password modal) ── */
@@ -406,6 +460,7 @@
 ============================================================ -->
 <div id="page15" class="page">
   <div class="dark-hint">turn on the lights…</div>
+  <div class="dark-heart-layer" id="darkHeartLayer"></div>
   <div class="switch-wrap" id="switchWrap" onclick="flipSwitch()">
     <div class="switch-plate">
       <div class="switch-lever" id="switchLever"></div>
@@ -425,6 +480,10 @@
     <div class="slide" id="slide2"></div>
     <div class="slide" id="slide3"></div>
     <div class="room-vignette"></div>
+    <div class="room-banner">
+      <span class="room-banner-title">✨ Happy Birthday PPP ✨</span>
+      <span class="room-banner-hint">click on the hearts for greetings 💕</span>
+    </div>
     <div class="balloon-layer" id="balloonLayer"></div>
   </div>
 </div>
@@ -530,9 +589,23 @@ function goToDarkRoom(){
   p1.style.opacity='0';
   setTimeout(()=>{
     p1.style.display='none';
+    buildDarkHearts();
     p15.style.display='block';
     requestAnimationFrame(()=>requestAnimationFrame(()=>{ p15.style.opacity='1'; }));
   }, 700);
+}
+
+function buildDarkHearts(){
+  const layer=document.getElementById('darkHeartLayer');
+  BALLOON_POS.forEach((pos)=>{
+    const bf=2.5+Math.random()*2.2;
+    const bfd=Math.random()*3;
+    const div=document.createElement('div');
+    div.className='dark-heart';
+    div.style.cssText=`left:${pos[0]+(Math.random()-.5)*2}%;top:${pos[1]+(Math.random()-.5)*2}%;--bf:${bf}s;--bfd:${bfd}s;`;
+    div.innerHTML='<div class="dark-heart-body"></div>';
+    layer.appendChild(div);
+  });
 }
 
 /* ═══════════════════════════════════════════════
