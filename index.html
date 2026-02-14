@@ -212,54 +212,79 @@
     .balloon{
       position:absolute;cursor:pointer;pointer-events:all;
       display:flex;flex-direction:column;align-items:center;
-      animation:balloon-float var(--bf,3s) ease-in-out infinite;
+      animation:balloon-float var(--bf,3s) ease-in-out infinite,
+                heart-glow-breathe var(--bf,3s) ease-in-out infinite;
       animation-delay:var(--bfd,0s);
-      filter:drop-shadow(0 8px 22px rgba(0,0,0,.22));
-      transition:filter .2s,transform .2s;
+      transition:transform .2s;
       user-select:none;
     }
     .balloon:hover{
-      filter:drop-shadow(0 10px 28px rgba(255,105,180,.55)) brightness(1.1);
-      transform:scale(1.08);
+      transform:scale(1.14);
       animation-play-state:paused;
+      filter:drop-shadow(0 0 18px rgba(255,182,193,1)) drop-shadow(0 0 40px rgba(255,105,180,.8)) brightness(1.08);
     }
+    /* ❤️ Heart shape — fixed 60×56 coordinate space */
     .balloon-body{
-      width:clamp(40px,min(7.5vw,10vh),86px);
-      height:clamp(52px,min(9.5vw,13vh),106px);
-      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      width:60px;
+      height:56px;
+      clip-path:path('M 30 52 C 3 38 0 22 0 14 C 0 6 7 2 15 2 C 22 2 27 6 30 10 C 33 6 38 2 45 2 C 53 2 60 6 60 14 C 60 22 57 38 30 52 Z');
+      background:radial-gradient(circle at 38% 32%, #ffe4f0, #ffb6d5);
       position:relative;
       display:flex;align-items:center;justify-content:center;
-      box-shadow:inset -8px -8px 18px rgba(0,0,0,.12),inset 6px 6px 14px rgba(255,255,255,.28);
     }
-    .balloon-body::after{
-      content:'';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);
-      width:14px;height:11px;
-      clip-path:polygon(50% 100%,0 0,100% 0);
-      background:inherit;
+    @media(max-width:480px){
+      .balloon-body{
+        width:46px;height:43px;
+        clip-path:path('M 23 40 C 2 29 0 17 0 11 C 0 5 5 2 11 2 C 17 2 21 5 23 8 C 25 5 29 2 35 2 C 41 2 46 5 46 11 C 46 17 44 29 23 40 Z');
+      }
     }
     .balloon-shine{
-      position:absolute;top:13%;left:17%;width:33%;height:24%;
-      background:rgba(255,255,255,.38);border-radius:50%;
-      transform:rotate(-30deg);pointer-events:none;
+      position:absolute;top:18%;left:20%;width:26%;height:18%;
+      background:rgba(255,255,255,.6);border-radius:50%;
+      transform:rotate(-28deg);pointer-events:none;
     }
     .balloon-label{
       position:relative;z-index:1;
-      font-family:'Dancing Script',cursive;font-size:clamp(.45rem,min(.95vw,1.3vh),.8rem);
-      color:rgba(255,255,255,.96);text-align:center;
-      text-shadow:0 1px 4px rgba(0,0,0,.45);line-height:1.3;font-weight:700;
+      font-family:'Dancing Script',cursive;font-size:clamp(.42rem,.9vw,.72rem);
+      color:rgba(175,55,105,.95);text-align:center;
+      text-shadow:0 1px 3px rgba(255,255,255,.65);line-height:1.3;font-weight:700;
     }
     .balloon-string{
-      width:1.5px;height:clamp(32px,5vh,58px);
-      background:linear-gradient(180deg,rgba(200,160,100,.65),rgba(200,160,100,.15));
+      width:1.5px;height:clamp(28px,4.5vh,52px);
+      background:linear-gradient(180deg,rgba(255,150,180,.7),rgba(255,150,180,.1));
     }
-    .balloon-locked .balloon-body{
-      box-shadow:0 0 22px rgba(255,215,0,.55),inset -8px -8px 18px rgba(0,0,0,.14),inset 6px 6px 14px rgba(255,255,255,.3);
+    /* Soft light emanating — breathes with float */
+    @keyframes heart-glow-breathe{
+      0%,100%{ filter:drop-shadow(0 0 7px rgba(255,182,193,.88))
+                       drop-shadow(0 0 18px rgba(255,105,180,.48)); }
+      50%    { filter:drop-shadow(0 0 14px rgba(255,220,235,1))
+                       drop-shadow(0 0 34px rgba(255,105,180,.78))
+                       drop-shadow(0 0 7px rgba(255,255,255,.55)); }
     }
     @keyframes balloon-float{
       0%,100%{transform:translateY(0) rotate(-2deg)}
-      28%    {transform:translateY(-17px) rotate(1.5deg)}
-      58%    {transform:translateY(-9px) rotate(2.5deg)}
-      82%    {transform:translateY(-21px) rotate(-1deg)}
+      28%    {transform:translateY(-15px) rotate(1.5deg)}
+      58%    {transform:translateY(-8px) rotate(2.5deg)}
+      82%    {transform:translateY(-19px) rotate(-1deg)}
+    }
+
+    /* ── LOCK BUTTON (top-right, reveals password modal) ── */
+    .lock-btn {
+      position:fixed;top:clamp(14px,3vh,26px);right:clamp(14px,3vw,26px);
+      z-index:200;
+      width:50px;height:50px;border-radius:50%;
+      background:linear-gradient(135deg,rgba(255,215,0,.92),rgba(184,134,11,.97));
+      border:2px solid rgba(255,235,120,.55);
+      color:#fff;font-size:1.35rem;
+      display:none;align-items:center;justify-content:center;
+      cursor:pointer;
+      transition:transform .2s,box-shadow .2s;
+      animation:lock-pulse 2.4s ease-in-out infinite;
+    }
+    .lock-btn:hover{transform:scale(1.12);box-shadow:0 6px 28px rgba(255,215,0,.7);}
+    @keyframes lock-pulse{
+      0%,100%{box-shadow:0 4px 20px rgba(255,215,0,.42)}
+      50%    {box-shadow:0 4px 30px rgba(255,215,0,.78),0 0 0 8px rgba(255,215,0,.12)}
     }
 
     /* ── MUSIC BUTTON ── */
@@ -341,6 +366,8 @@
 
 <!-- Music toggle button (visible in room) -->
 <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+<!-- Lock button top-right (visible in room) -->
+<button class="lock-btn" id="lockBtn" onclick="lockBtnClick(event)">🔐</button>
 
 <!-- ============================================================
      PAGE 1 — THE DOOR
@@ -570,6 +597,7 @@ function goToRoom(){
     const btn=document.getElementById('musicBtn');
     btn.style.display='flex';
     btn.classList.add('playing');
+    document.getElementById('lockBtn').style.display='flex';
     requestAnimationFrame(()=>requestAnimationFrame(()=>{ p2.style.opacity='1'; }));
   }, 600);
 }
@@ -660,13 +688,6 @@ function buildBalloons(){
     });
     layer.appendChild(balloon);
   });
-  const locked=makeBalloon('#ffe566','#c09010','Secret','🔐',LOCKED_POS[0],LOCKED_POS[1],true);
-  locked.addEventListener('click',(e)=>{
-    e.stopPropagation();
-    spawnConfetti(e.clientX, e.clientY);
-    setTimeout(()=>showPwModal(), 380);
-  });
-  layer.appendChild(locked);
 }
 
 function makeBalloon(c1, c2, label, emoji, leftPct, topPct, isLocked){
@@ -676,7 +697,7 @@ function makeBalloon(c1, c2, label, emoji, leftPct, topPct, isLocked){
   const bfd=Math.random()*3;
   div.style.cssText=`left:${leftPct}%;top:${topPct}%;--bf:${bf}s;--bfd:${bfd}s;`;
   div.innerHTML=`
-    <div class="balloon-body" style="background:radial-gradient(circle at 35% 30%,${c1},${c2})">
+    <div class="balloon-body">
       <div class="balloon-shine"></div>
       <div class="balloon-label">${label}<br>${emoji}</div>
     </div>
@@ -695,6 +716,14 @@ function openMsg(i){
   document.getElementById('msgModal').classList.add('show');
 }
 function closeMsgModal(){ document.getElementById('msgModal').classList.remove('show'); }
+
+/* ═══════════════════════════════════════════════
+   LOCK BUTTON
+═══════════════════════════════════════════════ */
+function lockBtnClick(e){
+  spawnConfetti(e.clientX, e.clientY);
+  setTimeout(()=>showPwModal(), 350);
+}
 
 /* ═══════════════════════════════════════════════
    PASSWORD MODAL
