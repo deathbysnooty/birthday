@@ -465,15 +465,20 @@
       display:block;
       font-family:'Dancing Script',cursive;
       font-size:clamp(1rem,min(3vw,3.5vh),1.9rem);
-      color:#e8006a;
-      text-shadow:0 0 10px rgba(255,20,147,.8),0 0 24px rgba(255,20,147,.45),0 1px 0 rgba(255,255,255,.15);
+      color:#ffffff;
+      text-shadow:0 0 8px rgba(255,255,255,1),0 0 20px rgba(220,220,255,.9),0 0 40px rgba(255,200,230,.6);
       letter-spacing:2px;line-height:1.3;
+      animation:silver-shimmer 2.8s ease-in-out infinite;
+    }
+    @keyframes silver-shimmer{
+      0%,100%{text-shadow:0 0 8px #fff,0 0 20px rgba(220,220,255,.9),0 0 40px rgba(255,200,230,.5);}
+      50%    {text-shadow:0 0 14px #fff,0 0 32px rgba(240,240,255,1),0 0 60px rgba(255,220,240,.8),0 0 80px rgba(255,180,220,.4);}
     }
     .room-banner-hint{
       display:block;
       font-size:clamp(.55rem,min(1.4vw,1.8vh),.8rem);
-      color:#c0005a;
-      text-shadow:0 0 8px rgba(199,21,133,.5);
+      color:rgba(255,255,255,.88);
+      text-shadow:0 0 6px rgba(255,255,255,.8),0 0 14px rgba(220,220,255,.5);
       letter-spacing:2.5px;text-transform:uppercase;margin-top:1px;
     }
 
