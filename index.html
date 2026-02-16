@@ -541,6 +541,31 @@
       50%    {box-shadow:0 4px 32px rgba(255,20,147,.8),0 0 0 10px rgba(255,20,147,.1)}
     }
 
+    /* ── CLICK ARROWS ── */
+    .click-arrow{
+      position:fixed;z-index:199;
+      display:none;
+      font-family:'Dancing Script',cursive;
+      font-size:.72rem;color:rgba(255,220,235,.92);
+      letter-spacing:1px;pointer-events:none;
+      white-space:nowrap;
+    }
+    .click-arrow-tl{
+      top:clamp(20px,3.5vh,34px);left:clamp(68px,calc(3vw + 56px),86px);
+      animation:arrow-bounce-r 1.4s ease-in-out infinite;
+    }
+    .click-arrow-bl{
+      bottom:clamp(20px,3.5vh,34px);left:clamp(68px,calc(3vw + 56px),86px);
+      animation:arrow-bounce-r 1.4s ease-in-out infinite .3s;
+    }
+    @keyframes arrow-bounce-r{
+      0%,100%{transform:translateX(0);opacity:.9;}
+      50%    {transform:translateX(6px);opacity:1;}
+    }
+    @media(max-width:400px){
+      .click-arrow{display:none!important;}
+    }
+
     /* ── SCROLL BUTTON (bottom-left) ── */
     .scroll-btn{
       position:fixed;bottom:clamp(14px,3vh,26px);left:clamp(14px,3vw,26px);
@@ -1053,6 +1078,9 @@
 <button class="game-btn" id="gameBtn" onclick="openGame()">🎯</button>
 <!-- Scroll button bottom-left (visible in room) -->
 <button class="scroll-btn" id="scrollBtn" onclick="openScroll()">📜</button>
+<!-- Click arrows -->
+<div class="click-arrow click-arrow-tl" id="clickArrowTL">← click</div>
+<div class="click-arrow click-arrow-bl" id="clickArrowBL">← click</div>
 
 <!-- Scroll message overlay -->
 <div class="scroll-overlay" id="scrollOverlay">
@@ -1498,6 +1526,8 @@ function goToRoom(){
     document.getElementById('lockBtn').style.display='flex';
     document.getElementById('gameBtn').style.display='flex';
     document.getElementById('scrollBtn').style.display='flex';
+    document.getElementById('clickArrowTL').style.display='block';
+    document.getElementById('clickArrowBL').style.display='block';
     requestAnimationFrame(()=>requestAnimationFrame(()=>{ p2.style.opacity='1'; }));
   }, 600);
 }
