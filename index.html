@@ -1055,14 +1055,14 @@
       border-bottom:1px solid #ddd;
     }
     .msg-phone-avatar{
-      width:52px;height:52px;border-radius:50%;
+      width:80px;height:80px;border-radius:50%;
       object-fit:cover;
-      border:2px solid rgba(255,105,180,.4);
-      box-shadow:0 0 15px rgba(255,20,147,.25);
+      border:3px solid rgba(255,105,180,.4);
+      box-shadow:0 0 20px rgba(255,20,147,.3);
       margin-bottom:6px;
     }
     .msg-phone-avatar-emoji{
-      width:52px;height:52px;border-radius:50%;
+      width:80px;height:80px;border-radius:50%;
       background:linear-gradient(135deg,#ff69b4,#c71585);
       display:flex;align-items:center;justify-content:center;
       font-size:1.8rem;margin-bottom:6px;
@@ -1741,7 +1741,10 @@ function openMsg(i){
   const g=GREETINGS[i];
   const avatarEl=document.getElementById('msgAvatar');
   if(g.image){
-    avatarEl.innerHTML=`<img class="msg-phone-avatar" src="${g.image}" alt="${g.from}">`;
+    const img=document.createElement('img');
+    img.className='msg-phone-avatar';img.src=g.image;img.alt=g.from;
+    img.onerror=()=>{avatarEl.innerHTML=`<div class="msg-phone-avatar-emoji">${g.emoji}</div>`;};
+    avatarEl.innerHTML='';avatarEl.appendChild(img);
   } else {
     avatarEl.innerHTML=`<div class="msg-phone-avatar-emoji">${g.emoji}</div>`;
   }
